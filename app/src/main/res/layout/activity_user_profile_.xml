@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray"
+    tools:context="com.example.vikas.jecchat.UserProfile_Activity">
+
+    <ImageView
+        android:id="@+id/display_image"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_above="@+id/display_Name"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/images" />
+
+    <TextView
+        android:id="@+id/display_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_Name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="status"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/send_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="106dp"
+        android:background="?attr/colorError"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="send friend request" />
+
+    <TextView
+        android:id="@+id/display_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="display  name"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/decline_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp"
+        android:text="Decline friend request" />
+</RelativeLayout>

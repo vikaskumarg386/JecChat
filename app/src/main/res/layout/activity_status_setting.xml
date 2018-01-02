@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vikas.jecchat.Status_setting">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/statusss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolBarrr"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="46dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your Status" />
+    </android.support.design.widget.TextInputLayout>
+
+    <include
+        android:id="@+id/toolBarrr"
+        layout="@layout/tool_bar"></include>
+
+    <Button
+        android:id="@+id/saveee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/statusss"
+        android:layout_below="@+id/statusss"
+        android:layout_marginTop="31dp"
+        android:background="@color/yellow"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Save Changes" />
+
+</RelativeLayout>

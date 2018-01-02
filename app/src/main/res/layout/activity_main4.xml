@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vikas.jecchat.LoginUserPage">
+
+    <include
+        android:id="@+id/loginToolbar"
+        layout="@layout/tool_bar"></include>
+
+    <RelativeLayout
+        android:id="@+id/r"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="260dp"
+            android:background="#f2ef54"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Login"
+            android:textColor="#1a82a8"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/enrollment"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="68dp"
+            android:text="Login to Your Account"
+            android:textColor="#1a82a8"
+            android:textColorLink="#1a82a8"
+            android:textSize="18sp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/enrollment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textView3"
+            android:layout_marginTop="29dp"
+            android:textColorHint="@color/gray"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/enrollment"
+                android:layout_alignStart="@+id/enrollment"
+                android:layout_marginBottom="33dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blueee"
+                android:hint="Enrollment No."
+                android:textColorLink="#1a82a8" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/login"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="46dp"
+            android:textColorHint="@color/gray"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/enrollment"
+                android:layout_below="@+id/enrollment"
+                android:layout_marginTop="33dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blueee"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColorLink="#1a82a8" />
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

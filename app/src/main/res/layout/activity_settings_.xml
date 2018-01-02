@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray"
+    tools:context="com.example.vikas.jecchat.Settings_Activity">
+
+    <TextView
+        android:id="@+id/s_tatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/displayName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="Hii there i am using JecChat"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/displayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circleImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Display Name"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/user"
+        app:civ_border_color="@color/blueee"
+        app:civ_border_width="2dp" />
+
+    <Button
+        android:id="@+id/change_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_tatus"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Change Image" />
+
+    <Button
+        android:id="@+id/change_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/change_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:background="@android:color/holo_red_dark"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Change Status" />
+
+</RelativeLayout>

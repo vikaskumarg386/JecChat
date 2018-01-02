@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/yellow">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chatIcon"
+        android:layout_width="45dp"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="11dp"
+        android:src="@drawable/user" />
+
+    <TextView
+        android:id="@+id/display_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="DisplayName"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/last_Seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/display_Name"
+        android:layout_below="@+id/display_Name"
+        android:layout_marginTop="0dp"
+        android:alpha="0.5"
+        android:text="last seen"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+        android:textSize="13sp" />
+
+</RelativeLayout>
