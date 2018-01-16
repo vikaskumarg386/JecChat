@@ -24,16 +24,28 @@
         <activity android:name=".WelcomePage" />
         <activity android:name=".CreateUserPage" />
         <activity android:name=".LoginUserPage" />
-        <activity android:name=".Settings_Activity" />
-        <activity android:name=".Status_setting" />
+        <activity android:name=".Settings_Activity"
+            android:parentActivityName=".MainPage"/>
+        <activity android:name=".Status_setting"
+            android:parentActivityName=".Settings_Activity"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
-        <activity android:name=".AllUsers_Activity" />
-        <activity android:name=".UserProfile_Activity" />
-        <activity android:name=".ChatActivity"
+        <activity android:name=".AllUsers_Activity"
+            android:parentActivityName=".MainPage"/>
+        <activity android:name=".UserProfile_Activity"
+            android:parentActivityName=".AllUsers_Activity"/>
+        <activity
+            android:name=".ChatActivity"
             android:parentActivityName=".MainPage"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Comment_Activity"
+            android:parentActivityName=".MainPage"/>
+        <activity
+            android:name=".Notification_Activity"
+            android:parentActivityName=".MainPage" />
+        <activity android:name=".Post_Activity"
+            android:parentActivityName=".MainPage"></activity>
     </application>
 
 </manifest>

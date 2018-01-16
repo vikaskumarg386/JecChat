@@ -104,36 +104,37 @@ public class ChatActivity extends AppCompatActivity {
 
         actionBar.setCustomView(actionbarView);
 
-        displayName=(TextView)findViewById(R.id.display_Name);
+        displayName=(TextView)findViewById(R.id.displayName);
         displayName.setText(name);
         lastSeen=(TextView)findViewById(R.id.last_Seen);
 
         icon=(CircleImageView)findViewById(R.id.chatIcon);
 
         Picasso.with(this).load(image).placeholder(R.drawable.user).into(icon);
+        if(!(id.equals("cse")||id.equals("me")||id.equals("ec")||id.equals("ce")||id.equals("ee")||id.equals("ip"))) {
+           mrootRef.child("users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+                   String online = dataSnapshot.child("online").getValue().toString();
 
-        mrootRef.child("users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String online=dataSnapshot.child("online").getValue().toString();
+                   if (online.equals("true"))
+                       lastSeen.setText("online");
+                   else {
 
-                if(online.equals("true"))
-                lastSeen.setText("online");
-                else{
+                       // TimeAgo timeAgo=new TimeAgo();
+                       long seenTime = Long.parseLong(online);
+                       String lastSeenTime = TimeAgo.getTimeAgo(seenTime, getApplicationContext());
+                       lastSeen.setText(lastSeenTime);
+                   }
 
-                   // TimeAgo timeAgo=new TimeAgo();
-                    long seenTime=Long.parseLong(online);
-                    String lastSeenTime=TimeAgo.getTimeAgo(seenTime,getApplicationContext());
-                    lastSeen.setText(lastSeenTime);
-                }
+               }
 
-            }
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+               }
+           });
+       }
 
 
         //saving messages
@@ -150,7 +151,7 @@ public class ChatActivity extends AppCompatActivity {
         messageList.setLayoutManager(linearLayout);
         messageList.setHasFixedSize(true);
         messageList.setAdapter(adapter);
-
+        mlist.clear();
         loadMessages();
 
 
@@ -173,30 +174,73 @@ public class ChatActivity extends AppCompatActivity {
                     DatabaseReference message_push_ref=FirebaseDatabase.getInstance().getReference().child("messages").child(userId).child(id).push();
                     String message_push_key=message_push_ref.getKey();
 
-                    Map saveText = new HashMap();
+                    final Map saveText = new HashMap();
                     saveText.put("message", text);
                     saveText.put("seen", false);
                     saveText.put("timestamp", DateFormat.getDateTimeInstance().format(new Date()));
                     saveText.put("type","text");
                     saveText.put("from",userId);
 
-                    Map map = new HashMap();
-                    map.put("messages/" + userId + "/" + id+"/"+message_push_key, saveText);
-                    map.put("messages/" + id + "/" + userId+"/"+message_push_key, saveText);
+                    if(!(id.equals("cse")||id.equals("me")||id.equals("ec")||id.equals("ce")||id.equals("ee")||id.equals("ip"))) {
+                        Map map = new HashMap();
+                        map.put("messages/" + userId + "/" + id + "/" + message_push_key, saveText);
+                        map.put("messages/" + id + "/" + userId + "/" + message_push_key, saveText);
 
-                    mrootRef.updateChildren(map, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            if (databaseError != null)
-                                Log.i("error sendingText", databaseError.getMessage());
-                        }
-                    });
+                        mrootRef.updateChildren(map, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError != null)
+                                    Log.i("error sendingText", databaseError.getMessage());
+                            }
+                        });
 
-                    chatText.setText("");
-                    mrootRef.child("chat").child(userId).child(id).child("seen").setValue(true);
-                    mrootRef.child("chat").child(userId).child(id).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
-                    mrootRef.child("chat").child(id).child(userId).child("seen").setValue(false);
-                    mrootRef.child("chat").child(id).child(userId).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
+                        chatText.setText("");
+                        mrootRef.child("chat").child(userId).child(id).child("seen").setValue(true);
+                        mrootRef.child("chat").child(userId).child(id).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
+                        mrootRef.child("chat").child(id).child(userId).child("seen").setValue(false);
+                        mrootRef.child("chat").child(id).child(userId).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
+
+                    }
+
+                    else{
+
+                        Map map = new HashMap();
+                        map.put("messages/" + userId + "/" + id + "/" + message_push_key, saveText);
+                       // map.put("messages/" + id + "/" + userId + "/" + message_push_key, saveText);
+
+                        mrootRef.child("branch").child(id).child("users").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot childSnapshot:dataSnapshot.getChildren()){
+                                    if(!childSnapshot.getKey().equals(userId)) {
+                                        mrootRef.child("messages").child(childSnapshot.getKey()).child(id).push().setValue(saveText);
+                                    }
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        mrootRef.updateChildren(map, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError != null)
+                                    Log.i("error sendingText", databaseError.getMessage());
+                            }
+                        });
+
+                        chatText.setText("");
+                        mrootRef.child("chat").child(userId).child(id).child("seen").setValue(true);
+                        mrootRef.child("chat").child(userId).child(id).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
+                       // mrootRef.child("chat").child(id).child(userId).child("seen").setValue(false);
+                       // mrootRef.child("chat").child(id).child(userId).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
+
+
+                    }
                 }
             }
         });
@@ -418,7 +462,8 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        mlist.clear();
+        loadMessages();
         mrootRef.child("users").child(userId).child("online").setValue("true");
     }
 

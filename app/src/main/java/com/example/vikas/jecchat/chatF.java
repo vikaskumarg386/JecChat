@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,11 +49,18 @@ public class chatF extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mview = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        if(FirebaseAuth.getInstance().getCurrentUser()==null)
+        {
+            Intent intent=new Intent(getContext(),WelcomePage.class);
+            startActivity(intent);
+        }
+        else{
         recyclerView = (RecyclerView) mview.findViewById(R.id.recyclerview_chat_fragment);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRef = FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mRootref = FirebaseDatabase.getInstance().getReference();
+        mRootref = FirebaseDatabase.getInstance().getReference();}
 
 
         return mview;
@@ -61,56 +69,101 @@ public class chatF extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser()==null)
+        {
+            Intent intent=new Intent(getContext(),WelcomePage.class);
+            startActivity(intent);
+        }
+        else {
 
-        Query chatQuery=mRef.orderByChild("timeStamp");
+            Query chatQuery = mRef.orderByChild("timeStamp");
 
-        FirebaseRecyclerAdapter<chat, chatListViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<chat, chatListViewHolder>(
+            FirebaseRecyclerAdapter<chat, chatListViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<chat, chatListViewHolder>(
 
-                chat.class,
-                R.layout.users_layout,
-                chatListViewHolder.class,
-                chatQuery
+                    chat.class,
+                    R.layout.users_layout,
+                    chatListViewHolder.class,
+                    chatQuery
 
-        ) {
-            @Override
-            protected void populateViewHolder(final chatListViewHolder viewHolder, chat model, int position) {
-                final String chatFriendId = getRef(position).getKey();
-                mRootref.child("users").child(chatFriendId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        final String name = dataSnapshot.child("name").getValue().toString();
-                        viewHolder.setName(name);
-                        final String image = dataSnapshot.child("thumbImage").getValue().toString();
-                        viewHolder.setImage(image,getContext());
+            ) {
+                @Override
+                protected void populateViewHolder(final chatListViewHolder viewHolder, chat model, int position) {
+                    final String chatFriendId = getRef(position).getKey();
+                    Log.i("group key",chatFriendId);
+                    if(!(chatFriendId.equals("me")||chatFriendId.equals("ce")||chatFriendId.equals("ee")||chatFriendId.equals("ec")||chatFriendId.equals("cse")||chatFriendId.equals("ip"))) {
 
-                        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                        mRootref.child("users").child(chatFriendId).addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onClick(View v) {
-                                Intent chatIntent=new Intent(getContext(),ChatActivity.class);
-                                chatIntent.putExtra("name",name);
-                                chatIntent.putExtra("thumbImage",image);
-                                chatIntent.putExtra("ID",chatFriendId);
-                                startActivity(chatIntent);
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                final String name = dataSnapshot.child("name").getValue().toString();
+                                viewHolder.setName(name);
+                                final String image = dataSnapshot.child("thumbImage").getValue().toString();
+                                viewHolder.setImage(image, getContext());
+
+                                viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                        chatIntent.putExtra("name", name);
+                                        chatIntent.putExtra("thumbImage", image);
+                                        chatIntent.putExtra("ID", chatFriendId);
+                                        startActivity(chatIntent);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+
+
+                        });
+                        viewHolder.setStatus();
+
+                    }
+
+                    else {
+
+                        mRootref.child("branch").child(chatFriendId).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                final String name=dataSnapshot.child("name").getValue().toString();
+                                final String image=dataSnapshot.child("thumbImage").getValue().toString();
+                                viewHolder.setName(name);
+                                viewHolder.setImage(image,getContext());
+
+                                viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                        chatIntent.putExtra("name", name);
+                                        chatIntent.putExtra("thumbImage", image);
+                                        chatIntent.putExtra("ID", chatFriendId);
+                                        startActivity(chatIntent);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
                             }
                         });
+
+
+
+
+
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
+                }
+            };
 
-
-
-                });
-                viewHolder.setStatus();
-
-
-
-            }
-        };
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        }
     }
 
     public static class chatListViewHolder extends RecyclerView.ViewHolder {

@@ -33,9 +33,10 @@
         android:layout_alignEnd="@+id/statusss"
         android:layout_below="@+id/statusss"
         android:layout_marginTop="31dp"
-        android:background="@color/yellow"
+        android:background="@color/dark_gray"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Save Changes" />
+        android:text="Save Changes"
+        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>

@@ -42,7 +42,13 @@ dependencies {
 
 
     testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:mediarouter-v7:27.0.2'
 }
+
+
+
+
+
 
 
 

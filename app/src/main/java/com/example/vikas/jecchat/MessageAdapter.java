@@ -52,6 +52,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public RelativeLayout rLayout;
         public ImageView imageMessage;
         public View mView;
+        public TextView nameofSender;
+        public CircleImageView circleImageView;
 
 
         public MessageViewHolder(View itemView) {
@@ -63,6 +65,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             rLayout=(RelativeLayout)itemView.findViewById(R.id.relative_layout);
             imageMessage=(ImageView)itemView.findViewById(R.id.imageMessage);
             mRootref= FirebaseDatabase.getInstance().getReference();
+            nameofSender=(TextView)itemView.findViewById(R.id.name_text_layout);
+            circleImageView=(CircleImageView)itemView.findViewById(R.id.message_profile_layout);
 
         }
     }
@@ -85,6 +89,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         String fromUserId = c.getFrom();
         holder.timeView.setText(c.getTimestamp());
 
+        mRootref.child("users").child(fromUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                holder.nameofSender.setText(dataSnapshot.child("name").getValue().toString());
+                Picasso.with(holder.circleImageView.getContext()).load(dataSnapshot.child("thumbImage").getValue().toString()).placeholder(R.drawable.user).into(holder.circleImageView);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         if(c.getType().equals("text")) {
 
             holder.imageMessage.setVisibility(View.INVISIBLE);
@@ -96,6 +115,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if (currentUserId.equals(fromUserId)) {
 
                 holder.messageText.setTextColor(Color.WHITE);
+
 
 
 

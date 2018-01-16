@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tool_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/yellow"
-    android:theme="@style/Base.ThemeOverlay.AppCompat.ActionBar">
+    android:background="@color/dark_gray"
+    android:theme="@style/AppTheme"
+    app:titleTextColor="@color/common_google_signin_btn_text_dark_default">
 
 </android.support.v7.widget.Toolbar>

@@ -45,13 +45,19 @@ public class requestF extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mMainView;
-
         mMainView=inflater.inflate(R.layout.fragment_request, container, false);
+
+        if(FirebaseAuth.getInstance().getCurrentUser()==null)
+        {
+            Intent intent=new Intent(getContext(),WelcomePage.class);
+            startActivity(intent);
+        }
+        else{
         mRootRef=FirebaseDatabase.getInstance().getReference();
         mRequestRef= mRootRef.child("friendRequest").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         recyclerView=(RecyclerView)mMainView.findViewById(R.id.request_recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));}
 
         return mMainView;
     }
@@ -61,55 +67,97 @@ public class requestF extends Fragment {
     public void onStart() {
         super.onStart();
 
+        if(FirebaseAuth.getInstance().getCurrentUser()==null)
+        {
+            Intent intent=new Intent(getContext(),WelcomePage.class);
+            startActivity(intent);
+        }
+        else {
 
-        FirebaseRecyclerAdapter<request,requestViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<request, requestViewHolder>(
+            FirebaseRecyclerAdapter<request, requestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<request, requestViewHolder>(
 
-                request.class,
-                R.layout.users_layout,
-                requestViewHolder.class,
-                mRequestRef
-
-
-        ) {
-            @Override
-            protected void populateViewHolder(final requestViewHolder viewHolder, request model, int position) {
-
-                final String requestUserId=getRef(position).getKey();
-                String reqType=model.getRequest_type();
-                if(reqType.equals("received")) {
-                    mRootRef.child("users").child(requestUserId).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            String name = dataSnapshot.child("name").getValue().toString();
-                            String image = dataSnapshot.child("thumbImage").getValue().toString();
-                            viewHolder.setName(name);
-                            viewHolder.setImage(image, getContext());
-                            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent profileIntet=new Intent(getContext(),UserProfile_Activity.class);
-                                    profileIntet.putExtra("Id",requestUserId);
-                                    startActivity(profileIntet);
-                                }
-                            });
+                    request.class,
+                    R.layout.users_layout,
+                    requestViewHolder.class,
+                    mRequestRef
 
 
-                        }
+            ) {
+                @Override
+                protected void populateViewHolder(final requestViewHolder viewHolder, request model, int position) {
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    final String requestUserId = getRef(position).getKey();
+                    String reqType = model.getRequest_type();
+                    if (reqType.equals("received")) {
+                        mRootRef.child("users").child(requestUserId).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        }
-                    });
+                                String name = dataSnapshot.child("name").getValue().toString();
+                                String image = dataSnapshot.child("thumbImage").getValue().toString();
+                                viewHolder.setName(name);
+                                viewHolder.setImage(image, getContext());
+                                viewHolder.setStatus("Request Received");
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent profileIntet = new Intent(getContext(), UserProfile_Activity.class);
+                                        profileIntet.putExtra("Id", requestUserId);
+                                        startActivity(profileIntet);
+                                    }
+                                });
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                    if(reqType.equals("sent")){
+                        mRootRef.child("users").child(requestUserId).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                String name = dataSnapshot.child("name").getValue().toString();
+                                String image = dataSnapshot.child("thumbImage").getValue().toString();
+                                viewHolder.setName(name);
+                                viewHolder.setImage(image, getContext());
+                                viewHolder.setStatus("Request Sent");
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent profileIntet = new Intent(getContext(), UserProfile_Activity.class);
+                                        profileIntet.putExtra("Id", requestUserId);
+                                        startActivity(profileIntet);
+                                    }
+                                });
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
+
+
+                    }
+
+
                 }
+            };
 
-                viewHolder.setStatus();
-
-            }
-        };
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        }
     }
 
     public static class requestViewHolder extends RecyclerView.ViewHolder{
@@ -132,9 +180,9 @@ public class requestF extends Fragment {
             Picasso.with(context).load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.user).into(img);
         }
 
-        public void setStatus(){
+        public void setStatus(String sts){
             TextView status=(TextView)mView.findViewById(R.id.displayUserStatus);
-            status.setVisibility(View.INVISIBLE);
+            status.setText(sts);
         }
     }
 }

@@ -17,13 +17,15 @@
             android:id="@+id/main_tool_bar"
             layout="@layout/tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></include>
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|enterAlways"></include>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/yellow"></android.support.design.widget.TabLayout>
+            android:background="@color/dark_gray"
+            app:tabTextColor="@color/common_google_signin_btn_text_dark_default"></android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 

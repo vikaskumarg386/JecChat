@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CreateUserPage extends AppCompatActivity {
@@ -30,6 +33,8 @@ public class CreateUserPage extends AppCompatActivity {
     TextInputLayout t2;
     TextInputLayout t3;
     TextInputLayout t4;
+    TextInputLayout t5;
+    TextInputLayout t6;
 
     FirebaseDatabase db=FirebaseDatabase.getInstance();
     DatabaseReference root=db.getReference();
@@ -42,7 +47,7 @@ public class CreateUserPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_create);
         mAuth=FirebaseAuth.getInstance();
         button=(Button)findViewById(R.id.button2);
 
@@ -57,7 +62,8 @@ public class CreateUserPage extends AppCompatActivity {
         t2=(TextInputLayout)findViewById(R.id.enroll);
         t3=(TextInputLayout)findViewById(R.id.branch);
         t4=(TextInputLayout)findViewById(R.id.pass);
-
+        t5=(TextInputLayout)findViewById(R.id.userEmail);
+        t6=(TextInputLayout)findViewById(R.id.semester);
 
 
 
@@ -65,13 +71,14 @@ public class CreateUserPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               final String enroll=t2.getEditText().getText().toString()+"@gmail.com";
+               final String enroll=t2.getEditText().getText().toString();
                 String pass=t4.getEditText().getText().toString();
                 final String display_name=t1.getEditText().getText().toString();
                 final String user_branch=t3.getEditText().getText().toString();
+                final String user_email=t5.getEditText().getText().toString();
+                final String sem=t6.getEditText().getText().toString();
 
-
-                mAuth.createUserWithEmailAndPassword(enroll, pass)
+                mAuth.createUserWithEmailAndPassword(user_email, pass)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -84,7 +91,7 @@ public class CreateUserPage extends AppCompatActivity {
                                 }
 
                                 else {
-                                    String id = mAuth.getCurrentUser().getUid();
+                                    final String id = mAuth.getCurrentUser().getUid();
                                     String tokenId = FirebaseInstanceId.getInstance().getToken();
 
                                     HashMap<String, String> hm = new HashMap<>();
@@ -94,12 +101,19 @@ public class CreateUserPage extends AppCompatActivity {
                                     hm.put("branch", user_branch);
                                     hm.put("image", "default");
                                     hm.put("thumbImage", "default");
+                                    hm.put("imageCover","default");
+                                    hm.put("thumbImageCover","default");
                                     hm.put("status", "Hii there i am using JecChat");
                                     hm.put("tokenId", tokenId);
+                                    hm.put("email",user_email);
+                                    hm.put("sem",sem);
                                     root.child("users").child(id).setValue(hm).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                root.child("chat").child(id).child(user_branch).child("seen").setValue(false);
+                                                root.child("chat").child(id).child(user_branch).child("timeStamp").setValue(DateFormat.getDateTimeInstance().format(new Date()));
+                                                root.child("branch").child(user_branch).child("users").child(id).setValue(DateFormat.getDateTimeInstance().format(new Date()));
                                                 Intent intent = new Intent(CreateUserPage.this, MainPage.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);

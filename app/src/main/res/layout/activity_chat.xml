@@ -20,11 +20,12 @@
         <ImageButton
             android:id="@+id/chat_add_btn"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:alpha="0.5"
             android:background="@android:color/white"
             android:padding="10dp"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
         <EditText
@@ -43,12 +44,13 @@
 
         <ImageButton
             android:id="@+id/chat_send_btn"
-            android:layout_width="83dp"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:alpha="0.5"
             android:background="@android:color/white"
             android:padding="10dp"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_send_black_24dp" />
     </LinearLayout>
 

@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_gray"
     tools:context="com.example.vikas.jecchat.WelcomePage">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="75dp"
+        android:layout_marginLeft="86dp"
+        android:layout_marginRight="86dp"
         android:layout_marginTop="25dp">
 
         <ImageView
@@ -38,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="209dp"
         android:text="Welcome to JecChat"
-        android:textColor="#1a82a8"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="30sp" />
 
     <Button
@@ -48,11 +50,11 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
-        android:background="#f2ef54"
+        android:background="@color/dark_gray"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Already have an account"
-        android:textColor="#1a82a8" />
+        android:textColor="@android:color/background_light" />
 
     <Button
         android:id="@+id/newAccount"
@@ -61,10 +63,10 @@
         android:layout_below="@+id/account"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp"
-        android:background="#f2ef54"
+        android:background="@color/dark_gray"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Need a new account?"
-        android:textColor="#1a82a8" />
+        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>

@@ -17,13 +17,17 @@ class SectionPagerAdapter  extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
 
         switch (position) {
+
             case 0:
+                timeLineF tf=new timeLineF();
+                        return tf;
+            case 1:
                 requestF rf=new requestF();
                 return rf;
-            case 1:
+            case 2:
                 chatF cf=new chatF();
                 return cf;
-            case 2:
+            case 3:
                 friendsF ff=new friendsF();
                 return ff;
             default:return null;
@@ -33,17 +37,19 @@ class SectionPagerAdapter  extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     public CharSequence getPageTitle(int position){
 
         switch (position){
             case 0:
-                return "REQUESTS";
+                return "TIMELINE";
             case 1:
-                return "CHATS";
+                return "REQUEST";
             case 2:
+                return "CHATS";
+            case 3:
                 return "FRIENDS";
             default:
                 return null;

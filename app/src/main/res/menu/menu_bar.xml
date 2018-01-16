@@ -2,9 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/profile"
-        android:title="Profile" />
+
     <item
         android:id="@+id/all_users"
         android:title="All Users" />
@@ -14,4 +12,16 @@
     <item
         android:id="@+id/logout"
         android:title="Logout" />
+
+    <item
+        android:id="@+id/userPost"
+        android:title="Post your message"
+        android:icon="@drawable/post"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_notifications"
+        android:icon="@drawable/notification"
+        android:title="Notifications"
+        app:showAsAction="always"/>
+
 </menu>

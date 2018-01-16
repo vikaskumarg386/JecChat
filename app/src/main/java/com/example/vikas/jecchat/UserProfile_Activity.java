@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -26,11 +26,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserProfile_Activity extends AppCompatActivity {
 
-    private ImageView profileImage;
+    private CircleImageView profileImage;
     private TextView profileName;
     private TextView profileStatus;
+    private TextView profileEnroll;
+    private TextView profileBranch;
+    private TextView profileSem;
+    private TextView profileEmail;
     private Button frndReq;
     private Button declReq;
 
@@ -49,9 +55,13 @@ public class UserProfile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_);
 
-        profileImage=(ImageView)findViewById(R.id.display_image);
-        profileName=(TextView)findViewById(R.id.display_Name);
-        profileStatus=(TextView)findViewById(R.id.display_status);
+        profileImage=(CircleImageView) findViewById(R.id.circleImageView);
+        profileName=(TextView)findViewById(R.id.displayName);
+        profileStatus=(TextView)findViewById(R.id.s_tatus);
+        profileEnroll=(TextView)findViewById(R.id.profileEnroll);
+        profileBranch=(TextView)findViewById(R.id.profileBranch);
+        profileSem=(TextView)findViewById(R.id.userSemester);
+        profileEmail=(TextView)findViewById(R.id.profileEmailid);
         frndReq=(Button)findViewById(R.id.send_request);
         declReq=(Button)findViewById(R.id.decline_request);
         declReq.setVisibility(View.INVISIBLE);
@@ -77,11 +87,29 @@ public class UserProfile_Activity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name=dataSnapshot.child("name").getValue().toString();
                 String status=dataSnapshot.child("status").getValue().toString();
-                String image=dataSnapshot.child("image").getValue().toString();
+                final String image=dataSnapshot.child("image").getValue().toString();
+                String enroll=dataSnapshot.child("enrollment").getValue().toString();
+                String branch=dataSnapshot.child("branch").getValue().toString();
+                String sem=dataSnapshot.child("sem").getValue().toString();
+                String emailId=dataSnapshot.child("email").getValue().toString();
 
+                profileEnroll.setText(enroll);
+                profileBranch.setText(branch);
+                profileEmail.setText(emailId);
+                profileSem.setText(sem);
                 profileName.setText(name);
                 profileStatus.setText(status);
-                Picasso.with(UserProfile_Activity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.images).into(profileImage);
+                Picasso.with(UserProfile_Activity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.images).into(profileImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        Picasso.with(UserProfile_Activity.this).load(image).placeholder(R.drawable.images).into(profileImage);
+                    }
+                });
 
                 //accepting friend request
                 requestRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {

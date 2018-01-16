@@ -86,6 +86,7 @@ public class friendsF extends Fragment {
 
                         final String friendName=dataSnapshot.child("name").getValue().toString();
                         final String friendThumbImage =dataSnapshot.child("thumbImage").getValue().toString();
+                        final String friendStatus =dataSnapshot.child("status").getValue().toString();
 
                         if(dataSnapshot.hasChild("online")){
                         String onlineStatus=dataSnapshot.child("online").getValue().toString();
@@ -93,6 +94,7 @@ public class friendsF extends Fragment {
 
                         viewHolder.setName(friendName);
                         viewHolder.setImage(friendThumbImage,getContext());
+                        viewHolder.setDate(friendStatus);
 
                         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -137,7 +139,7 @@ public class friendsF extends Fragment {
                     }
                 });
 
-                viewHolder.setDate(model.getDate());
+
 
 
 
@@ -156,9 +158,9 @@ public class friendsF extends Fragment {
             this.mView=itemView;
         }
 
-        public void setDate(String date){
+        public void setDate(String status){
             TextView dateText=(TextView)mView.findViewById(R.id.displayUserStatus);
-            dateText.setText(date);
+            dateText.setText(status);
         }
 
         public void setName(String name){

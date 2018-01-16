@@ -33,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="260dp"
-            android:background="#f2ef54"
+            android:background="@color/dark_gray"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="Login"
-            android:textColor="#1a82a8"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="18sp" />
 
         <TextView
@@ -49,8 +49,7 @@
             android:layout_marginLeft="3dp"
             android:layout_marginTop="68dp"
             android:text="Login to Your Account"
-            android:textColor="#1a82a8"
-            android:textColorLink="#1a82a8"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="18sp" />
 
         <android.support.design.widget.TextInputLayout
@@ -71,9 +70,9 @@
                 android:layout_alignStart="@+id/enrollment"
                 android:layout_marginBottom="33dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/blueee"
-                android:hint="Enrollment No."
-                android:textColorLink="#1a82a8" />
+                android:backgroundTint="@color/dark_gray"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -83,6 +82,7 @@
             android:layout_alignBottom="@+id/login"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="46dp"
+            android:hint="password"
             android:textColorHint="@color/gray"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
@@ -94,8 +94,7 @@
                 android:layout_below="@+id/enrollment"
                 android:layout_marginTop="33dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/blueee"
-                android:hint="Password"
+                android:backgroundTint="@color/dark_gray"
                 android:inputType="textPassword"
                 android:textColorLink="#1a82a8" />
         </android.support.design.widget.TextInputLayout>

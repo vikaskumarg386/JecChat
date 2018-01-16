@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -23,7 +22,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class LoginUserPage extends AppCompatActivity {
 
    private FirebaseAuth mAuth;
-   private TextInputLayout enroll;
+   private TextInputLayout userEmail;
    private TextInputLayout pass;
    private Button login;
     private Toolbar toolbar;
@@ -36,7 +35,7 @@ private DatabaseReference dbref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.activity_login);
 
         mAuth=FirebaseAuth.getInstance();
 
@@ -50,7 +49,7 @@ private DatabaseReference dbref;
 
 
 
-        enroll=(TextInputLayout)findViewById(R.id.enrollment);
+        userEmail=(TextInputLayout)findViewById(R.id.enrollment);
         pass=(TextInputLayout)findViewById(R.id.password);
         login=(Button)findViewById(R.id.login);
 
@@ -58,7 +57,7 @@ private DatabaseReference dbref;
             @Override
             public void onClick(View v) {
 
-                String en=enroll.getEditText().getText().toString()+"@gmail.com";
+                String en=userEmail.getEditText().getText().toString();
                 String pa=pass.getEditText().getText().toString();
 
                 if(en!=null||pa!=null){
